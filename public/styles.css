@@ -13,6 +13,7 @@ body{
     a{
         text-decoration: none;
         color: black;
+        font-family: Georgia, 'Times New Roman', Times, serif;
     }
 
     a:hover{
