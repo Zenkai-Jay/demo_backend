@@ -32,7 +32,7 @@ let foods = [
   {
     "_id": 1,
     "title": "Classic Margherita Pizza",
-    "img_name": "images/margherita.jpg",
+    "img_name": "image/Pizza.png",
     "category": "Pizza",
     "prep_time": "20 min",
     "servings": "2-3",
@@ -41,7 +41,7 @@ let foods = [
   {
     "_id": 2,
     "title": "Greek Salad",
-    "img_name": "images/greek-salad.jpg",
+    "img_name": "image/Fresh Greek Salad.png",
     "category": "Salad",
     "prep_time": "10 min",
     "servings": "2-4",
@@ -50,7 +50,7 @@ let foods = [
   {
     "_id": 3,
     "title": "Lemon Herb Chicken",
-    "img_name": "images/lemon-chicken.jpg",
+    "img_name": "image/Lemon herb chicken.png",
     "category": "Main",
     "prep_time": "30 min",
     "servings": "3-4",
@@ -59,7 +59,7 @@ let foods = [
   {
     "_id": 4,
     "title": "Jay's Burger Sliders",
-    "img_name": "images/burger-sliders.jpg",
+    "img_name": "image/Burger Sliders.png",
     "category": "Sandwiches",
     "prep_time": "25 min",
     "servings": "6",
@@ -68,7 +68,7 @@ let foods = [
   {
     "_id": 5,
     "title": "Chicken Alfredo Garlic Bread",
-    "img_name": "images/alfredo-garlic-bread.jpg",
+    "img_name": "image/Garlic Bread.png",
     "category": "Comfort",
     "prep_time": "35 min",
     "servings": "4",
@@ -77,7 +77,7 @@ let foods = [
   {
     "_id": 6,
     "title": "Pizza Sliders (Emily's)",
-    "img_name": "images/pizza-sliders.jpg",
+    "img_name": "image/Pizza Sliders.png",
     "category": "Snacks",
     "prep_time": "20 min",
     "servings": "8",
