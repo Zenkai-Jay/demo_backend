@@ -41,7 +41,7 @@ let foods = [
   {
     "_id": 2,
     "title": "Greek Salad",
-    "img_name": "image/Fresh Greek Salad.png",
+    "img_name": "image/fresh_greek_salad.png",
     "category": "Salad",
     "prep_time": "10 min",
     "servings": "2-4",
