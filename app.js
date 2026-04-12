@@ -11,6 +11,7 @@ http
   const express = require("express"); 
   const cors = require("cors");
   const multer = require("multer");
+  const Joi = require("joi");
   const app = express();
   app.use(express.static("public"));
   app.use(cors());
@@ -95,7 +96,45 @@ app.get("/api/foods/:id", (req,res)=>{
   res.send(food);
 });
 
+app.post("/api/foods", upload.single("img") ,(req,res) => {
+  console.log("In post request");
+
+  const result = validateFood(req.body);
+  if(result.error){
+    res.status(400).send(result.error.details[0].message);
+    return;
+  }
+  console.log("Passed Validation");
+
+  const food = {
+    _id: foods.length + 1,
+    title: req.body.title, 
+    category: req.body.category,
+    prep_time: req.body.prep_time,
+    servings: req.body.servings,
+    description: req.body.description
+  }
+  
+  if(req.file){
+    food.img_name = req.file.filename;
+  }
+  foods.push(food);
+  res.status(201).send(food);
+});
+
+const validateFood = (food) => {
+  const schema = Joi.object({
+    title: Joi.string().min(3).max(100).required(),
+    category: Joi.string().valid("Pizza", "Salad", "Main", "Sandwiches", "Comfort", "Snacks").required(),
+    prep_time: Joi.string().required(),
+    servings: Joi.string().required(),
+    description: Joi.string().min(10).max(500).required()
+  });
+  return schema.validate(food);
+};
+
 //Listen for incoming requests
-app.listen(3001, () => {
-    console.log("Server is running on port");
+const port = process.env.PORT || 3001;
+app.listen(port, "0.0.0.0", () => {
+    console.log(`Server is running on ${port}`);
 });
