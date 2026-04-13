@@ -20,7 +20,7 @@ http
 
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "./public/images/");
+      cb(null, "./public/image/");
     },
     filename: (req, file, cb) => {
       cb(null, file.originalname);
@@ -115,9 +115,9 @@ app.post("/api/foods", upload.single("img") ,(req,res) => {
     description: req.body.description
   }
   
-  if(req.file){
-    food.img_name = req.file.filename;
-  }
+  if (req.file) {
+  food.img_name = `image/${req.file.filename}`;
+}
   foods.push(food);
   res.status(201).send(food);
 });
