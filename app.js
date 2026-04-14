@@ -116,7 +116,7 @@ app.post("/api/foods", upload.single("img") ,(req,res) => {
   }
   
   if (req.file) {
-  food.img_name = `image/${req.file.filename}`;
+  food.img_name = req.file.filename;
 }
   foods.push(food);
   res.status(201).send(food);
