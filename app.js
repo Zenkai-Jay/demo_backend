@@ -114,9 +114,8 @@ app.post("/api/foods", upload.single("img") ,(req,res) => {
     servings: req.body.servings,
     description: req.body.description
   }
-  
-  if (req.file) {
-  food.img_name = req.file.filename;
+if (req.file) {
+  food.img_name = `image/${req.file.filename}`;
 }
   foods.push(food);
   res.status(201).send(food);
@@ -125,7 +124,6 @@ app.post("/api/foods", upload.single("img") ,(req,res) => {
 const validateFood = (food) => {
   const schema = Joi.object({
     title: Joi.string().min(3).max(100).required(),
-    category: Joi.string().valid("Pizza", "Salad", "Main", "Sandwiches", "Comfort", "Snacks").required(),
     prep_time: Joi.string().required(),
     servings: Joi.string().required(),
     description: Joi.string().min(10).max(500).required()
