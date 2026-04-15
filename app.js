@@ -100,10 +100,11 @@ app.post("/api/foods", upload.single("img") ,(req,res) => {
   console.log("In post request");
 
   const result = validateFood(req.body);
-  if(result.error){
-    res.status(400).send(result.error.details[0].message);
-    return;
-  }
+  if (result.error) {
+  console.log(result.error.details[0].message);
+  res.status(400).send(result.error.details[0].message);
+  return;
+}
   console.log("Passed Validation");
 
   const food = {
@@ -123,10 +124,11 @@ if (req.file) {
 
 const validateFood = (food) => {
   const schema = Joi.object({
-    title: Joi.string().min(3).max(100).required(),
+    title: Joi.string().required(),
+    category: Joi.string().required(),
     prep_time: Joi.string().required(),
     servings: Joi.string().required(),
-    description: Joi.string().min(10).max(500).required()
+    description: Joi.string().required()
   });
   return schema.validate(food);
 };
