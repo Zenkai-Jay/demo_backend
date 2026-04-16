@@ -122,6 +122,35 @@ if (req.file) {
   res.status(201).send(food);
 });
 
+app.put("/api/foods/:id", upload.single("img"), (req, res) => {
+  let food= foods.find((f) => f._id === parseInt(req.params.id));
+  console.log("In put request");
+
+  if (!food) {
+    return res.status(400).send("Food with given ID not found");
+  }
+
+  const result = validateFood(req.body);
+  if (result.error) {
+  console.log(result.error.details[0].message);
+  res.status(400).send(result.error.details[0].message);
+  return;
+}
+
+  food = {
+    title: req.body.title, 
+    category: req.body.category,
+    prep_time: req.body.prep_time,
+    servings: req.body.servings,
+    description: req.body.description
+  }
+
+if (req.file) {
+  food.img_name = `image/${req.file.filename}`;
+}
+  res.send(food);
+});
+
 const validateFood = (food) => {
   const schema = Joi.object({
     title: Joi.string().required(),
