@@ -126,6 +126,8 @@ app.put("/api/foods/:id", upload.single("img_name"), (req, res) => {
   let food= foods.find((f) => f._id === parseInt(req.params.id));
   console.log("In put request");
 
+  console.log("Hi" + req.params.id);
+
   if (!food) {
     return res.status(400).send("Food with given ID not found");
   }
@@ -137,19 +139,23 @@ app.put("/api/foods/:id", upload.single("img_name"), (req, res) => {
   return;
 }
 
-  food = {
-    title: req.body.title, 
-    category: req.body.category,
-    prep_time: req.body.prep_time,
-    servings: req.body.servings,
-    description: req.body.description
-  }
+console.log("Passed Validation");
+
+  
+    food.title = req.body.title, 
+    food.category = req.body.category,
+    food.prep_time = req.body.prep_time,
+    food.servings = req.body.servings,
+    food.description = req.body.description
+  
 
 if (req.file) {
   food.img_name = `image/${req.file.filename}`;
 }
-  res.send(food);
+  res.status(200).send(food);
 });
+
+
 
 const validateFood = (food) => {
   const schema = Joi.object({
