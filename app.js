@@ -122,7 +122,7 @@ if (req.file) {
   res.status(201).send(food);
 });
 
-app.put("/api/foods/:id", upload.single("img"), (req, res) => {
+app.put("/api/foods/:id", upload.single("img_name"), (req, res) => {
   let food= foods.find((f) => f._id === parseInt(req.params.id));
   console.log("In put request");
 
