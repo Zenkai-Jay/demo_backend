@@ -155,7 +155,17 @@ if (req.file) {
   res.status(200).send(food);
 });
 
+app.delete("/api/foods/:id", (req, res) => {
+  const food = foods.find((f) => f._id === parseInt(req.params.id));
 
+  if(!food) {
+    res.status(400).send("Food with given ID not found");
+  }
+
+  const index = foods.indexOf(food);
+  foods.splice(index, 1);
+  res.status(204).send();
+}); 
 
 const validateFood = (food) => {
   const schema = Joi.object({
