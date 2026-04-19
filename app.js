@@ -156,6 +156,7 @@ if (req.file) {
 });
 
 app.delete("/api/foods/:id", (req, res) => {
+  console.log("In delete request");
   const food = foods.find((f) => f._id === parseInt(req.params.id));
 
   if(!food) {
