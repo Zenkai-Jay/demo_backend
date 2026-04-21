@@ -48,12 +48,13 @@ http
   const upload = multer({ storage: storage });
 
 
-app.get("/api/foods",(req,res)=>{
+app.get("/api/foods",async (req,res)=>{
+  const foods =  Food.find();
   res.send(foods);
 });
 
-app.get("/api/foods/:id", (req,res)=>{
-  const food=foods.find((f)=>f._id===parseInt(req.params.id));
+app.get("/api/foods/:id", async (req,res)=>{
+  const food=await Food.findById(req.params.id);
   res.send(food);
 });
 
