@@ -119,9 +119,9 @@ if(!success){
 }
 });
 
-app.delete("/api/foods/:id", (req, res) => {
+app.delete("/api/foods/:id", async (req, res) => {
   console.log("In delete request");
-  const food = foods.find((f) => f._id === parseInt(req.params.id));
+  const food = await Food.findByIdAndDelete(req.params.id);
 
   if(!food) {
     res.status(400).send("Food with given ID not found");
