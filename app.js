@@ -32,66 +32,21 @@ http
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("Connected to mongodb..."))
   .catch((err) => console.error("could not connect ot mongodb...", err));
-  
+
+
+  const foodSchema = new mongoose.Schema({
+   title:String,
+   img_name:String,
+   category:String,
+   prep_time:String,
+   servings:String,
+   description:String
+  });
+
+  const Food = mongoose.model("Food", foodSchema);
+
   const upload = multer({ storage: storage });
 
-let foods = [
-  {
-    "_id": 1,
-    "title": "Classic Margherita Pizza",
-    "img_name": "image/Pizza.png",
-    "category": "Pizza",
-    "prep_time": "20 min",
-    "servings": "2-3",
-    "description": "Fresh mozzarella, tomatoes, and basil on a thin-crust base."
-  },
-  {
-    "_id": 2,
-    "title": "Greek Salad",
-    "img_name": "image/fresh-greek-salad.png",
-    "category": "Salad",
-    "prep_time": "10 min",
-    "servings": "2-4",
-    "description": "Cucumbers, tomatoes, Kalamata olives, red onion, and feta with lemon-oregano dressing."
-  },
-  {
-    "_id": 3,
-    "title": "Lemon Herb Chicken",
-    "img_name": "image/Lemon herb chicken.png",
-    "category": "Main",
-    "prep_time": "30 min",
-    "servings": "3-4",
-    "description": "Pan-seared chicken breasts marinated in lemon, garlic, and rosemary."
-  },
-  {
-    "_id": 4,
-    "title": "Jay's Burger Sliders",
-    "img_name": "image/Burger Sliders.png",
-    "category": "Sandwiches",
-    "prep_time": "25 min",
-    "servings": "6",
-    "description": "Hawaiian rolls with seasoned beef patties and melted cheese—party perfect."
-  },
-  {
-    "_id": 5,
-    "title": "Chicken Alfredo Garlic Bread",
-    "img_name": "image/Garlic Bread.png",
-    "category": "Comfort",
-    "prep_time": "35 min",
-    "servings": "4",
-    "description": "Garlic bread topped with chicken, Alfredo sauce, and melted cheeses."
-  },
-  {
-    "_id": 6,
-    "title": "Pizza Sliders (Emily's)",
-    "img_name": "image/Pizza Sliders.png",
-    "category": "Snacks",
-    "prep_time": "20 min",
-    "servings": "8",
-    "description": "Pull-apart sliders with mozzarella, pepperoni, and garlic butter."
-  }
-  
-]
 
 app.get("/api/foods",(req,res)=>{
   res.send(foods);
