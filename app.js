@@ -7,13 +7,14 @@ http
     res.end("Hello World!");
   })
   .listen(port);*/ 
-
+  require("dotenv").config();
   const express = require("express"); 
   const cors = require("cors");
   const multer = require("multer");
   const Joi = require("joi");
   const app = express();
   app.use(express.static("public"));
+  const mongoose = require("mongoose");
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
@@ -26,6 +27,11 @@ http
       cb(null, file.originalname);
     },
   });
+
+  mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("Connected to mongodb..."))
+  .catch((err) => console.error("could not connect ot mongodb...", err));
   
   const upload = multer({ storage: storage });
 
