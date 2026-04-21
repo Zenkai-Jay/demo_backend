@@ -58,7 +58,7 @@ app.get("/api/foods/:id", async (req,res)=>{
   res.send(food);
 });
 
-app.post("/api/foods", upload.single("img") ,(req,res) => {
+app.post("/api/foods", upload.single("img") , async(req,res) => {
   console.log("In post request");
 
   const result = validateFood(req.body);
@@ -69,30 +69,26 @@ app.post("/api/foods", upload.single("img") ,(req,res) => {
 }
   console.log("Passed Validation");
 
-  const food = {
-    _id: foods.length + 1,
+  const food = new Food({
     title: req.body.title, 
     category: req.body.category,
     prep_time: req.body.prep_time,
     servings: req.body.servings,
     description: req.body.description
-  }
+  });
+
 if (req.file) {
   food.img_name = `image/${req.file.filename}`;
 }
-  foods.push(food);
-  res.status(201).send(food);
+ const newFood = await food.save();
+  res.status(201).send(newFood);
 });
 
-app.put("/api/foods/:id", upload.single("img_name"), (req, res) => {
-  let food= foods.find((f) => f._id === parseInt(req.params.id));
+app.put("/api/foods/:id", upload.single("img_name"), async (req, res) => {
   console.log("In put request");
 
   console.log("Hi" + req.params.id);
 
-  if (!food) {
-    return res.status(400).send("Food with given ID not found");
-  }
 
   const result = validateFood(req.body);
   if (result.error) {
@@ -103,18 +99,24 @@ app.put("/api/foods/:id", upload.single("img_name"), (req, res) => {
 
 console.log("Passed Validation");
 
-  
-    food.title = req.body.title, 
-    food.category = req.body.category,
-    food.prep_time = req.body.prep_time,
-    food.servings = req.body.servings,
-    food.description = req.body.description
-  
+  const fieldsToUpdate = {
+    title: req.body.title,
+    category: req.body.category,
+    prep_time: req.body.prep_time,
+    servings: req.body.servings,
+    description: req.body.description
+  }
 
 if (req.file) {
-  food.img_name = `image/${req.file.filename}`;
+  fieldsToUpdate.img_name = `image/${req.file.filename}`;
 }
+const success = await Food.updateOne({_id: req.params.id}, fieldsToUpdate);
+if(!success){
+  res.status(400).send("Food with given ID not found");
+}else {
+  const food = await Food.findById(req.params.id);
   res.status(200).send(food);
+}
 });
 
 app.delete("/api/foods/:id", (req, res) => {
