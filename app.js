@@ -49,7 +49,7 @@ http
 
 
 app.get("/api/foods",async (req,res)=>{
-  const foods =  Food.find();
+  const foods =  await Food.find();
   res.send(foods);
 });
 
@@ -84,7 +84,7 @@ if (req.file) {
   res.status(201).send(newFood);
 });
 
-app.put("/api/foods/:id", upload.single("img_name"), async (req, res) => {
+app.put("/api/foods/:id", upload.single("img"), async (req, res) => {
   console.log("In put request");
 
   console.log("Hi" + req.params.id);
@@ -127,8 +127,8 @@ app.delete("/api/foods/:id", async (req, res) => {
     res.status(400).send("Food with given ID not found");
   }
 
-  const index = foods.indexOf(food);
-  foods.splice(index, 1);
+ 
+
   res.status(204).send();
 }); 
 
